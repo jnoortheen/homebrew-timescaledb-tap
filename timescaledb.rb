@@ -5,7 +5,7 @@ class Timescaledb < Formula
   # url "https://github.com/timescale/timescaledb/archive/refs/tags/2.22.1.tar.gz"
   sha256 "91428cd60b6cb98fc0cd25f09e902f919c670d98711a9ee0da32f43e7a257aa1"
   # sha256 "4593bb6188f09fa896fa60ff9f045fa1ddcbac84bff69a73c2ce561755526922"
-  version "2.22.1"
+  version "2.25.1"
   env :std
 
   option "with-oss-only", "Build TimescaleDB with only Apache-2 licensed code"
