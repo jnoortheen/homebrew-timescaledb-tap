@@ -7,10 +7,10 @@ class TimescaledbToolkit < Formula
 
   depends_on "rust" => :build
   depends_on "rustfmt" => :build
-  depends_on "postgresql@17"
+  depends_on "postgresql@14"
 
   def postgresql
-    Formula["postgresql@17"]
+    Formula["postgresql@14"]
   end
 
   resource "cargo-pgrx" do
@@ -24,18 +24,18 @@ class TimescaledbToolkit < Formula
 
     resource("cargo-pgrx").stage "pgrx"
     system "cargo", "install", "--locked", "--path", "pgrx/cargo-pgrx"
-    system "cargo", "pgrx", "init", "--pg17", "pg_config"
+    system "cargo", "pgrx", "init", "--pg14", "pg_config"
 
     cd "extension" do
       system "cargo", "pgrx", "package"
     end
 
-    dylib = Dir.glob("target/release/timescaledb_toolkit-pg17/**/timescaledb_toolkit*.dylib").first
+    dylib = Dir.glob("target/release/timescaledb_toolkit-pg14/**/timescaledb_toolkit*.dylib").first
     if dylib
       File.rename(dylib, dylib.sub(/\.dylib$/, '.so'))
     end
 
-    system "cargo", "run", "--bin", "post-install", "--", "--dir", "target/release/timescaledb_toolkit-pg17"
+    system "cargo", "run", "--bin", "post-install", "--", "--dir", "target/release/timescaledb_toolkit-pg14"
 
     (lib/postgresql.name).install Dir["target/release/**/lib/**/timescaledb_toolkit*.so"]
     (share/postgresql.name/"extension").install Dir["target/release/**/share/**/timescaledb_toolkit--*.sql"]
